@@ -2,11 +2,11 @@
 *
 * Itagaki Fumihiko 27-Aug-92  Create.
 * 1.0
-* Itagaki Fumihiko 06-Nov-92  strip_excessive_slashes ‚ÌƒoƒOfix‚É”º‚¤‰ü”ÅD
-*                             ±×‚ÈƒƒbƒZ[ƒW•ÏXD
+* Itagaki Fumihiko 06-Nov-92  strip_excessive_slashes ã®ãƒã‚°fixã«ä¼´ã†æ”¹ç‰ˆï¼Ž
+*                             äº›ç´°ãªãƒ¡ãƒƒã‚»ãƒ¼ã‚¸å¤‰æ›´ï¼Ž
 * 1.1
 * Itagaki Fumihiko 20-Jan-93  GETPDB -> lea $10(a0),a0
-* Itagaki Fumihiko 20-Jan-93  ˆø” - ‚Æ -- ‚Ìˆµ‚¢‚Ì•ÏX
+* Itagaki Fumihiko 20-Jan-93  å¼•æ•° - ã¨ -- ã®æ‰±ã„ã®å¤‰æ›´
 * 1.2
 *
 * Usage: ln [ -fisv ] [ -- ] source target
@@ -39,8 +39,8 @@ start:
 		bra.s	start1
 		dc.b	'#HUPAIR',0
 start1:
-		lea	stack_bottom,a7			*  A7 := ƒXƒ^ƒbƒN‚Ì’ê
-		lea	$10(a0),a0			*  A0 : PDBƒAƒhƒŒƒX
+		lea	stack_bottom,a7			*  A7 := ã‚¹ã‚¿ãƒƒã‚¯ã®åº•
+		lea	$10(a0),a0			*  A0 : PDBã‚¢ãƒ‰ãƒ¬ã‚¹
 		move.l	a7,d0
 		sub.l	a0,d0
 		move.l	d0,-(a7)
@@ -48,10 +48,10 @@ start1:
 		DOS	_SETBLOCK
 		addq.l	#8,a7
 	*
-	*  ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚ðŠm•Û‚·‚é
+	*  å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã‚’ç¢ºä¿ã™ã‚‹
 	*
-		lea	1(a2),a0			*  A0 := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶Žš—ñ‚Ìæ“ªƒAƒhƒŒƒX
-		bsr	strlen				*  D0.L := ƒRƒ}ƒ“ƒhƒ‰ƒCƒ“‚Ì•¶Žš—ñ‚Ì’·‚³
+		lea	1(a2),a0			*  A0 := ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
+		bsr	strlen				*  D0.L := ã‚³ãƒžãƒ³ãƒ‰ãƒ©ã‚¤ãƒ³ã®æ–‡å­—åˆ—ã®é•·ã•
 		addq.l	#1,d0
 		move.l	d0,-(a7)
 		DOS	_MALLOC
@@ -59,13 +59,13 @@ start1:
 		tst.l	d0
 		bmi	insufficient_memory
 
-		movea.l	d0,a1				*  A1 := ˆø”•À‚ÑŠi”[ƒGƒŠƒA‚Ìæ“ªƒAƒhƒŒƒX
+		movea.l	d0,a1				*  A1 := å¼•æ•°ä¸¦ã³æ ¼ç´ã‚¨ãƒªã‚¢ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 	*
-	*  ˆø”‚ðƒfƒR[ƒh‚µC‰ðŽß‚·‚é
+	*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã—ï¼Œè§£é‡ˆã™ã‚‹
 	*
-		bsr	DecodeHUPAIR			*  ˆø”‚ðƒfƒR[ƒh‚·‚é
-		movea.l	a1,a0				*  A0 : ˆø”ƒ|ƒCƒ“ƒ^
-		move.l	d0,d7				*  D7.L : ˆø”ƒJƒEƒ“ƒ^
+		bsr	DecodeHUPAIR			*  å¼•æ•°ã‚’ãƒ‡ã‚³ãƒ¼ãƒ‰ã™ã‚‹
+		movea.l	a1,a0				*  A0 : å¼•æ•°ãƒã‚¤ãƒ³ã‚¿
+		move.l	d0,d7				*  D7.L : å¼•æ•°ã‚«ã‚¦ãƒ³ã‚¿
 		moveq	#0,d5				*  D5.L : option
 decode_opt_loop1:
 		tst.l	d7
@@ -138,11 +138,11 @@ set_option_done:
 		bra	decode_opt_loop1
 
 decode_opt_done:
-		moveq	#0,d6				*  D6.W : ƒGƒ‰[EƒR[ƒh
+		moveq	#0,d6				*  D6.W : ã‚¨ãƒ©ãƒ¼ãƒ»ã‚³ãƒ¼ãƒ‰
 		subq.l	#2,d7
-		bcs	too_few_args			*  ˆø”‚ª–³‚¢ -> ƒGƒ‰[
+		bcs	too_few_args			*  å¼•æ•°ãŒç„¡ã„ -> ã‚¨ãƒ©ãƒ¼
 	*
-	*  target‚ð’²‚×‚é
+	*  targetã‚’èª¿ã¹ã‚‹
 	*
 		movea.l	a0,a1				*  A1 : 1st source
 		move.l	d7,d0
@@ -156,10 +156,10 @@ find_target:
 		bmi	exit_program
 		bne	ln_into_dir
 
-		*  target ‚ÍƒfƒBƒŒƒNƒgƒŠ‚Å‚Í‚È‚¢
+		*  target ã¯ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã¯ãªã„
 
 		tst.l	d7
-		bne	bad_destination			*  ˆø”‚ª 3ŒÂˆÈã -> ƒGƒ‰[
+		bne	bad_destination			*  å¼•æ•°ãŒ 3å€‹ä»¥ä¸Š -> ã‚¨ãƒ©ãƒ¼
 	*
 	*  ln [ -s ] source target
 	*
@@ -215,8 +215,8 @@ ln_error_exit_3:
 *****************************************************************
 * create_symlink_into_dir
 *
-*      A0 ‚ÅŽ¦‚³‚ê‚éƒGƒ“ƒgƒŠ‚ðŽw‚·ƒVƒ“ƒ{ƒŠƒbƒNEƒŠƒ“ƒN‚ð
-*      A1 ‚ÅŽ¦‚³‚ê‚éƒfƒBƒŒƒNƒgƒŠ‰º‚Éì¬‚·‚é
+*      A0 ã§ç¤ºã•ã‚Œã‚‹ã‚¨ãƒ³ãƒˆãƒªã‚’æŒ‡ã™ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ãƒ»ãƒªãƒ³ã‚¯ã‚’
+*      A1 ã§ç¤ºã•ã‚Œã‚‹ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä¸‹ã«ä½œæˆã™ã‚‹
 *
 * RETURN
 *      none
@@ -245,20 +245,20 @@ create_symlink_return:
 *****************************************************************
 * create_symlink_into_cwd
 *
-*      A0 ‚ÅŽ¦‚³‚ê‚éƒpƒX‚ðŽw‚·ƒVƒ“ƒ{ƒŠƒbƒNEƒŠƒ“ƒN‚ð
-*      ì‹ÆƒfƒBƒŒƒNƒgƒŠ‰º‚Éì¬‚·‚é
+*      A0 ã§ç¤ºã•ã‚Œã‚‹ãƒ‘ã‚¹ã‚’æŒ‡ã™ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ãƒ»ãƒªãƒ³ã‚¯ã‚’
+*      ä½œæ¥­ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªä¸‹ã«ä½œæˆã™ã‚‹
 *
 * RETURN
-*      D0-D2/A0-A2  ”j‰ó
+*      D0-D2/A0-A2  ç ´å£Š
 *****************************************************************
 *****************************************************************
 * create_symlink
 *
-*      A0 ‚ÅŽ¦‚³‚ê‚éƒpƒX‚ðŽw‚·ƒVƒ“ƒ{ƒŠƒbƒNEƒŠƒ“ƒN‚ð
-*      A1 ‚ÅŽ¦‚³‚ê‚éƒpƒX–¼‚Åì¬‚·‚é
+*      A0 ã§ç¤ºã•ã‚Œã‚‹ãƒ‘ã‚¹ã‚’æŒ‡ã™ã‚·ãƒ³ãƒœãƒªãƒƒã‚¯ãƒ»ãƒªãƒ³ã‚¯ã‚’
+*      A1 ã§ç¤ºã•ã‚Œã‚‹ãƒ‘ã‚¹åã§ä½œæˆã™ã‚‹
 *
 * RETURN
-*      D0-D2/A0-A2  ”j‰ó
+*      D0-D2/A0-A2  ç ´å£Š
 *****************************************************************
 create_symlink_into_cwd:
 		bsr	headtail			*  A1 := tail
@@ -305,9 +305,9 @@ target_ok:
 		lea	12(a7),a7
 verbose_done:
 		move.w	#(MODEVAL_LNK|MODEVAL_ARC),-(a7)
-		move.l	a0,-(a7)			*  target file ‚ð
-		DOS	_CREATE				*  ì¬‚·‚é
-		addq.l	#6,a7				*  iƒhƒ‰ƒCƒu‚ÌŒŸ¸‚ÍÏ‚ñ‚Å‚¢‚éj
+		move.l	a0,-(a7)			*  target file ã‚’
+		DOS	_CREATE				*  ä½œæˆã™ã‚‹
+		addq.l	#6,a7				*  ï¼ˆãƒ‰ãƒ©ã‚¤ãƒ–ã®æ¤œæŸ»ã¯æ¸ˆã‚“ã§ã„ã‚‹ï¼‰
 		move.l	d0,d1
 		bmi	perror
 
@@ -363,7 +363,7 @@ confirm_done:
 * cat_pathname_x
 *
 * RETURN
-*      A2     ”j‰ó
+*      A2     ç ´å£Š
 *****************************************************************
 cat_pathname_x:
 		bsr	cat_pathname
@@ -383,16 +383,16 @@ lgetmode:
 		tst.l	d0
 		rts
 *****************************************************************
-* is_directory - –¼‘O‚ªƒfƒBƒŒƒNƒgƒŠ‚Å‚ ‚é‚©‚Ç‚¤‚©‚ð’²‚×‚é
+* is_directory - åå‰ãŒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã‚ã‚‹ã‹ã©ã†ã‹ã‚’èª¿ã¹ã‚‹
 *
 * CALL
-*      A0     –¼‘O
+*      A0     åå‰
 *
 * RETURN
-*      D0.L   –¼‘O/*.* ‚ª’·‚·‚¬‚é‚È‚ç‚Î -1D
-*             ‚±‚Ì‚Æ‚«ƒGƒ‰[ƒƒbƒZ[ƒW‚ª•\Ž¦‚³‚êCD6.L ‚É‚Í 2 ‚ªƒZƒbƒg‚³‚ê‚éD
+*      D0.L   åå‰/*.* ãŒé•·ã™ãŽã‚‹ãªã‚‰ã° -1ï¼Ž
+*             ã“ã®ã¨ãã‚¨ãƒ©ãƒ¼ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œï¼ŒD6.L ã«ã¯ 2 ãŒã‚»ãƒƒãƒˆã•ã‚Œã‚‹ï¼Ž
 *
-*             ‚»‚¤‚Å‚È‚¯‚ê‚ÎC–¼‘O‚ªƒfƒBƒŒƒNƒgƒŠ‚È‚ç‚Î 1C‚³‚à‚È‚­‚Î 0
+*             ãã†ã§ãªã‘ã‚Œã°ï¼Œåå‰ãŒãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãªã‚‰ã° 1ï¼Œã•ã‚‚ãªãã° 0
 *
 *      CCR    TST.L D0
 *****************************************************************
@@ -407,7 +407,7 @@ is_directory:
 		bsr	cat_pathname_x
 		bmi	is_directory_return
 
-		move.w	#MODEVAL_ALL,-(a7)		*  ‚·‚×‚Ä‚ÌƒGƒ“ƒgƒŠ‚ðŒŸõ‚·‚é
+		move.w	#MODEVAL_ALL,-(a7)		*  ã™ã¹ã¦ã®ã‚¨ãƒ³ãƒˆãƒªã‚’æ¤œç´¢ã™ã‚‹
 		move.l	a0,-(a7)
 		pea	filesbuf(pc)
 		DOS	_FILES
@@ -522,29 +522,29 @@ perror_table:
 	dc.w	msg_error-sys_errmsgs			*  25 (-26)
 
 sys_errmsgs:
-msg_error:		dc.b	'ƒGƒ‰[',0
-msg_nofile:		dc.b	'‚±‚Ì‚æ‚¤‚Èƒtƒ@ƒCƒ‹‚Í‚ ‚è‚Ü‚¹‚ñ',0
-msg_nopath:		dc.b	'ƒpƒX‚ª‘¶Ý‚µ‚Ä‚¢‚Ü‚¹‚ñ',0
-msg_too_many_openfiles:	dc.b	'ƒI[ƒvƒ“‚µ‚Ä‚¢‚éƒtƒ@ƒCƒ‹‚ª‘½‚·‚¬‚Ü‚·',0
-msg_bad_name:		dc.b	'–¼‘O‚ª–³Œø‚Å‚·',0
-msg_bad_drive:		dc.b	'ƒhƒ‰ƒCƒu‚ÌŽw’è‚ª–³Œø‚Å‚·',0
-msg_cannot_create:	dc.b	'ƒtƒ@ƒCƒ‹‚ª‘¶Ý‚µ‚Ä‚¢‚Ü‚·',0
-msg_directory_full:	dc.b	'ƒfƒBƒŒƒNƒgƒŠ‚ª–ž”t‚Å‚·',0
-msg_disk_full:		dc.b	'ƒfƒBƒXƒN‚ª–ž”t‚Å‚·',0
+msg_error:		dc.b	'ã‚¨ãƒ©ãƒ¼',0
+msg_nofile:		dc.b	'ã“ã®ã‚ˆã†ãªãƒ•ã‚¡ã‚¤ãƒ«ã¯ã‚ã‚Šã¾ã›ã‚“',0
+msg_nopath:		dc.b	'ãƒ‘ã‚¹ãŒå­˜åœ¨ã—ã¦ã„ã¾ã›ã‚“',0
+msg_too_many_openfiles:	dc.b	'ã‚ªãƒ¼ãƒ—ãƒ³ã—ã¦ã„ã‚‹ãƒ•ã‚¡ã‚¤ãƒ«ãŒå¤šã™ãŽã¾ã™',0
+msg_bad_name:		dc.b	'åå‰ãŒç„¡åŠ¹ã§ã™',0
+msg_bad_drive:		dc.b	'ãƒ‰ãƒ©ã‚¤ãƒ–ã®æŒ‡å®šãŒç„¡åŠ¹ã§ã™',0
+msg_cannot_create:	dc.b	'ãƒ•ã‚¡ã‚¤ãƒ«ãŒå­˜åœ¨ã—ã¦ã„ã¾ã™',0
+msg_directory_full:	dc.b	'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãŒæº€æ¯ã§ã™',0
+msg_disk_full:		dc.b	'ãƒ‡ã‚£ã‚¹ã‚¯ãŒæº€æ¯ã§ã™',0
 
 msg_myname:		dc.b	'ln'
 msg_colon:		dc.b	': ',0
-msg_no_memory:		dc.b	'ƒƒ‚ƒŠ‚ª‘«‚è‚Ü‚¹‚ñ',CR,LF,0
-msg_illegal_option:	dc.b	'•s³‚ÈƒIƒvƒVƒ‡ƒ“ -- ',0
-msg_too_few_args:	dc.b	'ˆø”‚ª‘«‚è‚Ü‚¹‚ñ',0
-msg_too_long_pathname:	dc.b	'ƒpƒX–¼‚ª’·‰ß‚¬‚Ü‚·',0
-msg_not_a_directory:	dc.b	'ƒfƒBƒŒƒNƒgƒŠ‚Å‚Í‚ ‚è‚Ü‚¹‚ñ',0
-msg_nodir:		dc.b	'‚±‚Ì‚æ‚¤‚ÈƒfƒBƒŒƒNƒgƒŠ‚Í‚ ‚è‚Ü‚¹‚ñ',0
-msg_confirm:		dc.b	' ‚ðÁ‹Ž‚µ‚Ä‚æ‚ë‚µ‚¢‚Å‚·‚©H ',0
-msg_cannot_overwrite:	dc.b	'ƒfƒBƒŒƒNƒgƒŠ‚âƒ{ƒŠƒ…[ƒ€Eƒ‰ƒxƒ‹‚É‚Í‘‚«ž‚ß‚Ü‚¹‚ñ',0
+msg_no_memory:		dc.b	'ãƒ¡ãƒ¢ãƒªãŒè¶³ã‚Šã¾ã›ã‚“',CR,LF,0
+msg_illegal_option:	dc.b	'ä¸æ­£ãªã‚ªãƒ—ã‚·ãƒ§ãƒ³ -- ',0
+msg_too_few_args:	dc.b	'å¼•æ•°ãŒè¶³ã‚Šã¾ã›ã‚“',0
+msg_too_long_pathname:	dc.b	'ãƒ‘ã‚¹åãŒé•·éŽãŽã¾ã™',0
+msg_not_a_directory:	dc.b	'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã§ã¯ã‚ã‚Šã¾ã›ã‚“',0
+msg_nodir:		dc.b	'ã“ã®ã‚ˆã†ãªãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã¯ã‚ã‚Šã¾ã›ã‚“',0
+msg_confirm:		dc.b	' ã‚’æ¶ˆåŽ»ã—ã¦ã‚ˆã‚ã—ã„ã§ã™ã‹ï¼Ÿ ',0
+msg_cannot_overwrite:	dc.b	'ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªã‚„ãƒœãƒªãƒ¥ãƒ¼ãƒ ãƒ»ãƒ©ãƒ™ãƒ«ã«ã¯æ›¸ãè¾¼ã‚ã¾ã›ã‚“',0
 msg_usage:		dc.b	CR,LF
-			dc.b	'Žg—p–@:  ln [-fisv] [--] <–¼‘O> <ì¬ƒŠƒ“ƒN–¼>',CR,LF
-			dc.b	'         ln [-fisv] [--] <–¼‘O> ... <ì¬æƒfƒBƒŒƒNƒgƒŠ>'
+			dc.b	'ä½¿ç”¨æ³•:  ln [-fisv] [--] <åå‰> <ä½œæˆãƒªãƒ³ã‚¯å>',CR,LF
+			dc.b	'         ln [-fisv] [--] <åå‰> ... <ä½œæˆå…ˆãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª>'
 msg_newline:		dc.b	CR,LF,0
 msg_arrow:		dc.b	' -> ',0
 dos_wildcard_all:	dc.b	'*.*',0
